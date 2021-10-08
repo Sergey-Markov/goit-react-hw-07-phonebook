@@ -2,25 +2,46 @@ import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
 import phonebookActions from "../redux/phonebook-actions";
 
+const {
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+  addContactsRequest,
+  addContactsSuccess,
+  addContactsError,
+  deleteContacts,
+  onChangeFilter,
+} = phonebookActions;
+
 const contacts = createReducer([], {
-  [phonebookActions.addContacts]: (state, { payload }) => {
+  [fetchContactsSuccess]: (_, { payload }) => payload,
+  [addContactsSuccess]: (state, { payload }) => {
     if (state.find((contact) => contact.name === payload.name)) {
       alert(`${payload.name} is already created!`);
       return state;
     }
     return [...state, payload];
   },
-  [phonebookActions.deleteContacts]: (state, { payload }) =>
+  [deleteContacts]: (state, { payload }) =>
     state.filter((contact) => contact.id !== payload),
 });
 
 const filter = createReducer("", {
-  [phonebookActions.onChangeFilter]: (_, { payload }) => payload,
+  [onChangeFilter]: (_, { payload }) => payload,
 });
 
+const loading = createReducer(false, {
+  [fetchContactsRequest]: () => true,
+  [fetchContactsSuccess]: () => false,
+  [fetchContactsError]: () => false,
+  [addContactsRequest]: () => true,
+  [addContactsSuccess]: () => false,
+  [addContactsError]: () => false,
+});
 export default combineReducers({
   contacts,
   filter,
+  loading,
 });
 
 // const contacts = (state = initialContactsState, { type, payload }) => {

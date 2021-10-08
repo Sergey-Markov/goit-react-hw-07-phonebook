@@ -1,10 +1,14 @@
 import s from "../Contacts/Contacts.module.css";
-
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import phonebookActions from "../../redux/phonebook-actions";
+import phonebookOperations from "../../redux/phonebook-operations";
+import { useEffect } from "react";
 
-function Contacts({ contacts, onClick }) {
+function Contacts({ fetchContacts, contacts, onClick }) {
+  useEffect(() => {
+    fetchContacts();
+  }, [fetchContacts]);
+
   return (
     <ul className={s.list}>
       {contacts.map((contact) => {
@@ -31,13 +35,32 @@ Contacts.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+// const mapStateToProps = (state) => {
+//   const { filter, contacts } = state.phonebook;
+//   const filteredContacts = () => {
+//     const normalizeFilter = filter.toLowerCase().trim();
+//     return contacts.filter((contact) =>
+//       contact.name.toLowerCase().includes(normalizeFilter)
+//     );
+//   };
+//   const filteredContact = filteredContacts();
+
+//   return {
+//     contacts: filteredContact,
+//   };
+// };
 const mapStateToProps = (state) => {
   const { filter, contacts } = state.phonebook;
+  console.log("My contacts:", contacts);
+  console.log("My filter:", filter);
+
   const filteredContacts = () => {
     const normalizeFilter = filter.toLowerCase().trim();
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(normalizeFilter)
-    );
+
+    return contacts.filter((contact) => {
+      console.log(typeof contact.name);
+      return contact.name.toLowerCase().includes(normalizeFilter);
+    });
   };
   const filteredContact = filteredContacts();
 
@@ -46,7 +69,8 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
-  onClick: (id) => dispatch(phonebookActions.deleteContacts(id)),
+  fetchContacts: () => dispatch(phonebookOperations.fetchContacts()),
+  onClick: (id) => dispatch(phonebookOperations.deleteContacts(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

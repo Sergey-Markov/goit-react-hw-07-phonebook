@@ -2,8 +2,8 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import contactsReducer from "./phonebook-reducer";
 import logger from "redux-logger";
 import {
-  persistStore,
-  persistReducer,
+  // persistStore,
+  // persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -11,13 +11,18 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+// import storage from "redux-persist/lib/storage";
 
-const persistConfig = {
-  key: "currentContacts",
-  storage,
-  blacklist: ["filter"],
-};
+// const persistConfig = {
+//   key: "currentContacts",
+//   storage,
+//   blacklist: ["filter"],
+// };
+
+// const myMiddleware = (store) => (next) => (action) => {
+//   console.log("My middleware for example");
+//   next(action);
+// };
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -25,18 +30,22 @@ const middleware = [
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }),
+  // myMiddleware,
   logger,
 ];
 
 const store = configureStore({
   reducer: {
-    phonebook: persistReducer(persistConfig, contactsReducer),
+    // phonebook: persistReducer(persistConfig, contactsReducer),
+    phonebook: contactsReducer,
   },
   middleware,
   devTools: process.env.NODE_ENV === "development",
 });
 
-const persistor = persistStore(store);
+// const persistor = persistStore(store);
 
 // eslint-disable-next-line
-export default { store, persistor };
+export default store;
+
+// export default { store, persistor };

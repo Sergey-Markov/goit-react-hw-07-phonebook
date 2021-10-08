@@ -22,6 +22,7 @@
   },
   "homepage": "https://Sergey-Markov.github.io/goit-react-hw-07-phonebook",
   "scripts": {
+    "server": "json-server --port 7777 --watch db.json",
     "predeploy": "npm run build",
     "deploy": "gh-pages -b gh-pages -d build",
     "start": "react-scripts start",

@@ -1,19 +1,27 @@
 import { createAction } from "@reduxjs/toolkit";
-import shortid from "shortid";
 
-const addContacts = createAction("contacts / add", (newContact) => {
-  return {
-    payload: {
-      id: shortid.generate(),
-      ...newContact,
-    },
-  };
-});
-const deleteContacts = createAction("contacts / delete");
-const onChangeFilter = createAction("contacts / changeFilter");
+const fetchContactsRequest = createAction("contacts/fetchContactsRequest");
+const fetchContactsSuccess = createAction("contacts/fetchContactsSuccess");
+const fetchContactsError = createAction("contacts/fetchContactsError");
+
+const addContactsRequest = createAction("contacts/addContactsRequest");
+const addContactsSuccess = createAction("contacts/addContactsSuccess");
+const addContactsError = createAction("contacts/addContactsError");
+
+const deleteContacts = createAction("contacts/delete");
+const onChangeFilter = createAction("contacts/changeFilter");
 
 // eslint-disable-next-line
-export default { addContacts, deleteContacts, onChangeFilter };
+export default {
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+  addContactsRequest,
+  addContactsSuccess,
+  addContactsError,
+  deleteContacts,
+  onChangeFilter,
+};
 
 // const addContacts = (newContact) => ({
 //   type: phonebookActionsTypes.ADD,
