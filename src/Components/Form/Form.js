@@ -19,6 +19,16 @@ class Form extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.props.contacts);
+
+    if (
+      this.props.contacts.find((contact) => contact.name === this.state.name)
+    ) {
+      alert(`${this.state.name} is already created!`);
+
+      return;
+    }
+
     this.props.onSubmit(this.state);
     this.resetFormInput();
   };
@@ -64,13 +74,14 @@ class Form extends Component {
     );
   }
 }
-
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
-
+const mapStateToProps = (state) => ({
+  contacts: state.phonebook.contacts,
+});
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (newContact) => dispatch(operations.addContacts(newContact)),
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

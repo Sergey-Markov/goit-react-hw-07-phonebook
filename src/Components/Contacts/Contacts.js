@@ -51,14 +51,11 @@ Contacts.propTypes = {
 // };
 const mapStateToProps = (state) => {
   const { filter, contacts } = state.phonebook;
-  console.log("My contacts:", contacts);
-  console.log("My filter:", filter);
 
   const filteredContacts = () => {
     const normalizeFilter = filter.toLowerCase().trim();
 
     return contacts.filter((contact) => {
-      console.log(typeof contact.name);
       return contact.name.toLowerCase().includes(normalizeFilter);
     });
   };

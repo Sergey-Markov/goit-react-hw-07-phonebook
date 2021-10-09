@@ -1,22 +1,23 @@
 import axios from "axios";
-import actions from "./phonebook-actions";
+import phonebookActions from "./phonebook-actions";
 axios.defaults.baseURL = "http://localhost:7777";
 
 const fetchContacts = () => (dispatch) => {
-  dispatch(actions.fetchContactsRequest());
+  dispatch(phonebookActions.fetchContactsRequest());
   axios
     .get("/contacts")
-    .then(({ data }) => dispatch(actions.fetchContactsSuccess(data)))
-    .catch((error) => dispatch(actions.fetchContactsError(error)));
+    .then(({ data }) => dispatch(phonebookActions.fetchContactsSuccess(data)))
+    .catch((error) => dispatch(phonebookActions.fetchContactsError(error)));
 };
 
 const addContacts = (newContact) => (dispatch) => {
   const contact = newContact;
-  dispatch(actions.addContactsRequest());
+  dispatch(phonebookActions.addContactsRequest());
+
   axios
     .post("/contacts", contact)
-    .then(({ data }) => dispatch(actions.addContactsSuccess(data)))
-    .catch((error) => dispatch(actions.addContactsError(error)));
+    .then(({ data }) => dispatch(phonebookActions.addContactsSuccess(data)))
+    .catch((error) => dispatch(phonebookActions.addContactsError(error)));
 };
 
 // eslint-disable-next-line
