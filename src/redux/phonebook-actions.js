@@ -8,7 +8,11 @@ const addContactsRequest = createAction("contacts/addContactsRequest");
 const addContactsSuccess = createAction("contacts/addContactsSuccess");
 const addContactsError = createAction("contacts/addContactsError");
 
-const deleteContacts = createAction("contacts/delete");
+const deleteContactsRequest = createAction("contacts/deleteContactsRequest");
+const deleteContactsSuccess = createAction("contacts/deleteContactsSuccess");
+const deleteContactsError = createAction("contacts/deleteContactsError");
+
+// const deleteContacts = createAction("contacts/delete");
 const onChangeFilter = createAction("contacts/changeFilter");
 
 // eslint-disable-next-line
@@ -19,7 +23,9 @@ export default {
   addContactsRequest,
   addContactsSuccess,
   addContactsError,
-  deleteContacts,
+  deleteContactsRequest,
+  deleteContactsSuccess,
+  deleteContactsError,
   onChangeFilter,
 };
 

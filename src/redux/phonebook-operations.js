@@ -2,12 +2,20 @@ import axios from "axios";
 import phonebookActions from "./phonebook-actions";
 axios.defaults.baseURL = "http://localhost:7777";
 
-const fetchContacts = () => (dispatch) => {
+const fetchContacts = () => async (dispatch) => {
   dispatch(phonebookActions.fetchContactsRequest());
-  axios
-    .get("/contacts")
-    .then(({ data }) => dispatch(phonebookActions.fetchContactsSuccess(data)))
-    .catch((error) => dispatch(phonebookActions.fetchContactsError(error)));
+
+  try {
+    const { data } = await axios.get("/contacts");
+    dispatch(phonebookActions.fetchContactsSuccess(data));
+  } catch (error) {
+    dispatch(phonebookActions.fetchContactsError(error));
+  }
+
+  // axios
+  //   .get("/contacts")
+  //   .then(({ data }) => dispatch(phonebookActions.fetchContactsSuccess(data)))
+  //   .catch((error) => dispatch(phonebookActions.fetchContactsError(error)));
 };
 
 const addContacts = (newContact) => (dispatch) => {
@@ -20,5 +28,16 @@ const addContacts = (newContact) => (dispatch) => {
     .catch((error) => dispatch(phonebookActions.addContactsError(error)));
 };
 
+const deleteContacts = (contactId) => (dispatch) => {
+  dispatch(phonebookActions.deleteContactsRequest());
+
+  axios
+    .delete(`/contacts/${contactId}`)
+    .then(({ data }) =>
+      dispatch(phonebookActions.deleteContactsSuccess(contactId))
+    )
+    .catch((error) => dispatch(phonebookActions.deleteContactsError(error)));
+};
+
 // eslint-disable-next-line
-export default { addContacts, fetchContacts };
+export default { addContacts, fetchContacts, deleteContacts };

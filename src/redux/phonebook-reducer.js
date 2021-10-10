@@ -9,21 +9,18 @@ const {
   addContactsRequest,
   addContactsSuccess,
   addContactsError,
-  deleteContacts,
+  deleteContactsRequest,
+  deleteContactsSuccess,
+  deleteContactsError,
   onChangeFilter,
 } = phonebookActions;
 
 const contacts = createReducer([], {
   [fetchContactsSuccess]: (_, { payload }) => payload,
   [addContactsSuccess]: (state, { payload }) => {
-    // if (state.find((contact) => contact.name === payload.name)) {
-    //   alert(`${payload.name} is already created!`);
-
-    //   return state;
-    // }
     return [...state, payload];
   },
-  [deleteContacts]: (state, { payload }) =>
+  [deleteContactsSuccess]: (state, { payload }) =>
     state.filter((contact) => contact.id !== payload),
 });
 
@@ -38,6 +35,9 @@ const loading = createReducer(false, {
   [addContactsRequest]: () => true,
   [addContactsSuccess]: () => false,
   [addContactsError]: () => false,
+  [deleteContactsRequest]: () => true,
+  [deleteContactsSuccess]: () => false,
+  [deleteContactsError]: () => false,
 });
 export default combineReducers({
   contacts,

@@ -4,29 +4,35 @@ import { connect } from "react-redux";
 import phonebookOperations from "../../redux/phonebook-operations";
 import { useEffect } from "react";
 
-function Contacts({ fetchContacts, contacts, onClick }) {
+function Contacts({ fetchContacts, contacts, isLoading, onClick }) {
   useEffect(() => {
     fetchContacts();
-  }, [fetchContacts]);
+  }, [fetchContacts, onClick]);
 
   return (
-    <ul className={s.list}>
-      {contacts.map((contact) => {
-        const { id, name, number } = contact;
-        return (
-          <li key={id} className={s.item}>
-            {name}: {number}
-            <button
-              type="button"
-              onClick={() => onClick(id)}
-              className={s.button}
-            >
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <div>
+      <ul className={s.list}>
+        {contacts.map((contact) => {
+          const { id, name, number } = contact;
+          return (
+            <li key={id} className={s.item}>
+              {name}: {number}
+              <button
+                type="button"
+                onClick={() => {
+                  onClick(id);
+                  // fetchContacts();
+                }}
+                className={s.button}
+              >
+                Delete
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      {isLoading && <h3>Loading...</h3>}
+    </div>
   );
 }
 
@@ -50,7 +56,7 @@ Contacts.propTypes = {
 //   };
 // };
 const mapStateToProps = (state) => {
-  const { filter, contacts } = state.phonebook;
+  const { filter, contacts, loading } = state.phonebook;
 
   const filteredContacts = () => {
     const normalizeFilter = filter.toLowerCase().trim();
@@ -62,6 +68,7 @@ const mapStateToProps = (state) => {
   const filteredContact = filteredContacts();
 
   return {
+    isLoading: loading,
     contacts: filteredContact,
   };
 };
