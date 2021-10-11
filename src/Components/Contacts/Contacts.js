@@ -1,10 +1,8 @@
 import s from "../Contacts/Contacts.module.css";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
-import phonebookOperations from "../../redux/phonebook-operations";
 import { useEffect } from "react";
-import phonebookSelectors from "../../redux/phonebook-selectors";
-
+import { phonebookOperations, phonebookSelectors } from "../../redux";
 function Contacts({ contacts, isLoading, onClick }) {
   const dispatch = useDispatch();
   useEffect(() => {

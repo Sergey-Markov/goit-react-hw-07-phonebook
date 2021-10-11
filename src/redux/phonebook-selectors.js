@@ -21,7 +21,7 @@ export default {
   getFilteredContacts,
 };
 
-// фильтр до мемоизации
+//------------------ фильтр до мемоизации
 // const getFilteredContacts = (state) => {
 //   const filter = getPhonebookFilter(state);
 //   const contacts = getPhonebookContacts(state);

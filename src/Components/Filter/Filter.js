@@ -2,8 +2,7 @@ import shortid from "shortid";
 import PropTypes from "prop-types";
 import s from "../Filter/Filter.module.css";
 import { connect } from "react-redux";
-import phonebookActions from "../../redux/phonebook-actions";
-import phonebookSelectors from "../../redux/phonebook-selectors";
+import { phonebookActions, phonebookSelectors } from "../../redux";
 
 function Filter({ filter, onChange }) {
   const filterId = shortid.generate();
