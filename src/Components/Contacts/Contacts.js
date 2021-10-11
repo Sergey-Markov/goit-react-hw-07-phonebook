@@ -1,13 +1,15 @@
 import s from "../Contacts/Contacts.module.css";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import phonebookOperations from "../../redux/phonebook-operations";
 import { useEffect } from "react";
+import phonebookSelectors from "../../redux/phonebook-selectors";
 
-function Contacts({ fetchContacts, contacts, isLoading, onClick }) {
+function Contacts({ contacts, isLoading, onClick }) {
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchContacts();
-  }, [fetchContacts, onClick]);
+    dispatch(phonebookOperations.fetchContacts());
+  }, [dispatch]);
 
   return (
     <div>
@@ -21,7 +23,6 @@ function Contacts({ fetchContacts, contacts, isLoading, onClick }) {
                 type="button"
                 onClick={() => {
                   onClick(id);
-                  // fetchContacts();
                 }}
                 className={s.button}
               >
@@ -41,6 +42,19 @@ Contacts.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: phonebookSelectors.getIsLOading(state),
+    contacts: phonebookSelectors.getFilteredContacts(state),
+  };
+};
+const mapDispatchToProps = (dispatch) => ({
+  fetchContacts: () => dispatch(phonebookOperations.fetchContacts()),
+  onClick: (id) => dispatch(phonebookOperations.deleteContacts(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+
 // const mapStateToProps = (state) => {
 //   const { filter, contacts } = state.phonebook;
 //   const filteredContacts = () => {
@@ -55,26 +69,3 @@ Contacts.propTypes = {
 //     contacts: filteredContact,
 //   };
 // };
-const mapStateToProps = (state) => {
-  const { filter, contacts, loading } = state.phonebook;
-
-  const filteredContacts = () => {
-    const normalizeFilter = filter.toLowerCase().trim();
-
-    return contacts.filter((contact) => {
-      return contact.name.toLowerCase().includes(normalizeFilter);
-    });
-  };
-  const filteredContact = filteredContacts();
-
-  return {
-    isLoading: loading,
-    contacts: filteredContact,
-  };
-};
-const mapDispatchToProps = (dispatch) => ({
-  fetchContacts: () => dispatch(phonebookOperations.fetchContacts()),
-  onClick: (id) => dispatch(phonebookOperations.deleteContacts(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

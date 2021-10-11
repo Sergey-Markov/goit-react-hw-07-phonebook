@@ -11,11 +11,6 @@ const fetchContacts = () => async (dispatch) => {
   } catch (error) {
     dispatch(phonebookActions.fetchContactsError(error));
   }
-
-  // axios
-  //   .get("/contacts")
-  //   .then(({ data }) => dispatch(phonebookActions.fetchContactsSuccess(data)))
-  //   .catch((error) => dispatch(phonebookActions.fetchContactsError(error)));
 };
 
 const addContacts = (newContact) => (dispatch) => {
@@ -41,3 +36,17 @@ const deleteContacts = (contactId) => (dispatch) => {
 
 // eslint-disable-next-line
 export default { addContacts, fetchContacts, deleteContacts };
+
+// ------------ если использовать Асинксанк
+
+// const addContacts = createAsyncThunk(
+//   "contacts/addContacts",
+//   async (contact) => {
+//     const { data } = await axios.post("/contacts", contact);
+//     return data;
+//   }
+// );
+// const fetchContacts = createAsyncThunk("contacts/fetchContacts", async () => {
+//   const { data } = await axios.get("/contacts");
+//   return data;
+// });

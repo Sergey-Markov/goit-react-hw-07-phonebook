@@ -12,7 +12,6 @@ const deleteContactsRequest = createAction("contacts/deleteContactsRequest");
 const deleteContactsSuccess = createAction("contacts/deleteContactsSuccess");
 const deleteContactsError = createAction("contacts/deleteContactsError");
 
-// const deleteContacts = createAction("contacts/delete");
 const onChangeFilter = createAction("contacts/changeFilter");
 
 // eslint-disable-next-line

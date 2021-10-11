@@ -16,6 +16,7 @@ const {
 } = phonebookActions;
 
 const contacts = createReducer([], {
+  // [phonebookOperations.fetchContacts.fulfilled]: (_, { payload }) => payload, - если использовать createAsyncThunk
   [fetchContactsSuccess]: (_, { payload }) => payload,
   [addContactsSuccess]: (state, { payload }) => {
     return [...state, payload];
@@ -26,6 +27,11 @@ const contacts = createReducer([], {
 
 const filter = createReducer("", {
   [onChangeFilter]: (_, { payload }) => payload,
+});
+
+const error = createReducer(null, {
+  [fetchContactsError]: (_, { payload }) => payload,
+  [fetchContactsRequest]: () => null,
 });
 
 const loading = createReducer(false, {
@@ -43,6 +49,7 @@ export default combineReducers({
   contacts,
   filter,
   loading,
+  error,
 });
 
 // const contacts = (state = initialContactsState, { type, payload }) => {
