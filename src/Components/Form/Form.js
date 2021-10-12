@@ -25,6 +25,7 @@ class Form extends Component {
       this.props.contacts.find((contact) => contact.name === this.state.name)
     ) {
       alert(`${this.state.name} is already created!`);
+      this.resetFormInput();
 
       return;
     }
